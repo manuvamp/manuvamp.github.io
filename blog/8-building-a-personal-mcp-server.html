@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Building a personal MCP server: what we learned</title><meta name="description" content="Notes from shipping a read-focused personal MCP server for a consumer app: scoping, auth, budgets, and honest limits."><link rel="stylesheet" href="../style.css"></head><body>
+<main><a href="../">← ORANO resources</a>
+<h1>Building a personal MCP server: what we learned</h1>
+<p class="meta">Founder notes · Manu Parasuraman</p>
+<p>ORANO shipped a personal MCP server so subscribers can let their own AI agents read their saved context. These are the decisions that mattered, for anyone building something similar.</p>
+<h2>1. Read-only by default</h2>
+<p>We scoped the server to five read tools — list projects, get a project, get pending handoffs, search the library, read memory facts. No mutations. The blast radius of a buggy agent call is zero. Details: <a href="https://oranoai.com/mcp">oranoai.com/mcp</a>.</p>
+<h2>2. Personal keys, not shared tokens</h2>
+<p>Each user provisions personal keys (bearer auth, scope <code>orano:read</code>, up to 10 active). Nothing is shared across users, and revoking one key revokes one agent.</p>
+<h2>3. Budgets before features</h2>
+<p>A runaway agent loop is the most common failure mode. The budget is 240 calls per user per 60 minutes. Generous for real use, fatal for runaway loops.</p>
+<h2>4. Durable handoffs over polling</h2>
+<p>When a user explicitly sends a project to their agent, it lands in a durable per-key handoff queue rather than relying on the agent to poll at the right moment.</p>
+<h2>5. Publish a machine-readable manifest</h2>
+<p><a href="https://oranoai.com/mcp.json">oranoai.com/mcp.json</a> documents the transport, auth format, onboarding URLs and tool list. Agents and integrators stop guessing.</p>
+<h2>6. Say what it can't do</h2>
+<p>No one-click OAuth yet, no write access, no cross-user reads. Honest limits are a feature: <a href="https://oranoai.com/llms.txt">oranoai.com/llms.txt</a> spells them out for both humans and models.</p>
+<p>ORANO is on <a href="https://apps.apple.com/us/app/orano-ai/id6791454509">iOS</a> and <a href="https://play.google.com/store/apps/details?id=com.oranoai.app">Android</a>, $5/month.</p>
+</main></body></html>

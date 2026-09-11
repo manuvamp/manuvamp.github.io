@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The read-only principle: why your AI agent should read, not write</title><meta name="description" content="Before handing your AI agent the keys, start with read access. Here is why read-only MCP is the safe default."><link rel="stylesheet" href="../style.css"></head><body>
+<main><a href="../">← ORANO resources</a>
+<h1>The read-only principle: why your AI agent should read, not write</h1>
+<p class="meta">Founder notes · Manu Parasuraman</p>
+<p>Everyone is connecting agents to their tools. Almost nobody is asking the first question that matters: should this agent be able to change things?</p>
+<h2>Write access is where the risk lives</h2>
+<p>A read-only agent can only waste your time. A write-enabled agent can waste your data. When you give an assistant permission to edit, delete, or reorganize, every hallucination becomes an irreversible action. Read access gives you ninety percent of the value with a fraction of the blast radius: the agent can ground its answers in your real context, but it cannot act on a mistake.</p>
+<h2>How ORANO implements it</h2>
+<p><a href="https://oranoai.com/">ORANO</a> exposes a personal MCP server that is read-focused by design. Your agent — ChatGPT, Claude, Cursor, anything MCP-compatible — can list your projects, read a project's summary, tasks and sources, search your library, and read your curated memory facts. It cannot mutate projects, tasks, or memory. Access is per-person API keys with a required scope (<code>orano:read</code>), rate-limited at 240 calls per user per 60 minutes, with up to 10 active keys.</p>
+<p>The machine-readable details are public: <a href="https://oranoai.com/mcp.json">oranoai.com/mcp.json</a>.</p>
+<h2>Honest limits</h2>
+<ul>
+<li>Provisioning currently requires a paid subscription and a manually generated key — no one-click OAuth yet.</li>
+<li>The only write-side state change is acknowledging a handoff you explicitly triggered from the app.</li>
+<li>Write actions remain a roadmap item, gated behind the same scope system.</li>
+</ul>
+<p>Start read-only. Earn write access later.</p>
+<p>Orano is on <a href="https://apps.apple.com/us/app/orano-ai/id6791454509">iOS</a> and <a href="https://play.google.com/store/apps/details?id=com.oranoai.app">Android</a>.</p>
+</main></body></html>
